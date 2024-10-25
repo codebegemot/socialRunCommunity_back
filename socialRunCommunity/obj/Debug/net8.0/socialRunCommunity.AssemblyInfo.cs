@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("socialRunCommunity")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+10f0aa742a2a480023c3199e94e324996c1184b1")]
 [assembly: System.Reflection.AssemblyProductAttribute("socialRunCommunity")]
 [assembly: System.Reflection.AssemblyTitleAttribute("socialRunCommunity")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
