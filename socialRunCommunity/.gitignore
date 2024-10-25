@@ -1,0 +1,31 @@
+# Ignore build output and user-specific files
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.csproj.user
+*.dbmdl
+*.log
+*.sql
+*.sqlite
+
+# Ignore MacOS and Linux specific files
+.DS_Store
+.idea/
+
+# Ignore JetBrains Rider project specific directories
+.idea/
+.rider/
+
+# Ignore Visual Studio Code specific files
+.vscode/
+
+# Ignore unnecessary project files
+*.class
+*.dll
+*.exe
+*.cache
+*.pdb
+*.mdb
+*.pidb
