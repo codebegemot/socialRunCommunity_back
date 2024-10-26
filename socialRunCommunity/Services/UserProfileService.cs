@@ -9,7 +9,7 @@ public class UserProfileService
         _eventParticipantRepository = eventParticipantRepository;
     }
 
-    public async Task<User?> GetUserProfileProfileAsync(int userId)
+    public async Task<User?> GetUserProfileAsync(int userId)
     {
         return await _userRepository.GetByIdAsync(userId);
     }
