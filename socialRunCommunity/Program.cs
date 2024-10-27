@@ -23,6 +23,17 @@ builder.Services.AddScoped<UserProfileService>();
 builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<AuthService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", builder =>
+    {
+        builder.WithOrigins("http://localhost:8080") // Замените на адрес фронтенда
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -31,6 +42,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowFrontend");
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 

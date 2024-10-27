@@ -7,6 +7,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Event> Events{ get; set; }
     public DbSet<EventParticipant> EventParticipants{ get; set; }
+    public DbSet<Organizer> Organizers { get; set; }
+    public DbSet<EventOrganizer> EventOrganizers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,5 +41,27 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Event>()
             .Property(e => e.Description)
             .HasMaxLength(500);
+
+        modelBuilder.Entity<EventOrganizer>()
+            .HasKey(eo => new { eo.EventId, eo.OrganizerId });
+
+        modelBuilder.Entity<EventOrganizer>()
+            .HasOne(eo => eo.Event)
+            .WithMany(e => e.EventOrganizers)
+            .HasForeignKey(eo => eo.EventId);
+
+        modelBuilder.Entity<EventOrganizer>()
+            .HasOne(eo => eo.Organizer)
+            .WithMany(o => o.EventOrganizers)
+            .HasForeignKey(eo => eo.OrganizerId);
+
+        // Ограничения на длину строк
+        modelBuilder.Entity<Event>()
+            .Property(e => e.Title)
+            .HasMaxLength(30);
+
+        modelBuilder.Entity<Event>()
+            .Property(e => e.Location)
+            .HasMaxLength(50);
     }
 }
