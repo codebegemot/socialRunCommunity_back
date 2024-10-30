@@ -14,6 +14,12 @@ public class EventService
         return await _eventRepository.GetAllAsync();
     }
 
+    public async Task<Event> GetEventAsync(int pageNumber)
+    {
+        var skip = pageNumber - 1;
+        return await _eventRepository.GetEventAsync(skip);
+    }
+
     public async Task<Event?> GetEventByIdAsync(int eventId)
     {
         return await _eventRepository.GetByIdAsync(eventId);

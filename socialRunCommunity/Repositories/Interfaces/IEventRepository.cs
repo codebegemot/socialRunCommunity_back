@@ -1,4 +1,4 @@
 public interface IEventRepository : IRepository<Event>
 {
-    // Можно добавить дополнительные методы, если они понадобятся
+    Task<Event> GetEventAsync(int skip);
 }
