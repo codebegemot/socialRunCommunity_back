@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using socialRunCommunity.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,10 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(5000); // Устанавливаем HTTP на порту 5000
+});
 
 var app = builder.Build();
 
@@ -47,7 +52,7 @@ app.UseCors("AllowFrontend");
 
 app.UseStaticFiles();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
