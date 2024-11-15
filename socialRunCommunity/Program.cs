@@ -36,7 +36,7 @@ builder.Services.AddCors(options =>
 
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenLocalhost(5000); // Устанавливаем HTTP на порту 5000
+    options.ListenAnyIP(5000); // Устанавливаем HTTP на порту 5000
 });
 
 var app = builder.Build();
