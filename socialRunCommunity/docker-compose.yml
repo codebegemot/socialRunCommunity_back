@@ -7,7 +7,6 @@ services:
       - "5001:5001"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Host=database;Database=socialRunCommunity;Username=postgres;Password=postgres
     volumes:
       - /etc/ssl:/etc/ssl:ro
     depends_on:
