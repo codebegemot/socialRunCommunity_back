@@ -38,7 +38,6 @@ builder.Services.AddCors(options =>
 // Configure Kestrel to use HTTPS
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenAnyIP(80); // HTTP
     options.ListenAnyIP(443, listenOptions =>
     {
         listenOptions.UseHttps("/etc/ssl/surfonlife.pfx", "Corvus404");

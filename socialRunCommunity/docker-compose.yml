@@ -3,7 +3,7 @@ services:
   app:
     build: .
     ports:
-      - "80:80"       # HTTP
+      # - "80:80"       # HTTP
       - "443:443"     # HTTPS
     environment:
       ASPNETCORE_ENVIRONMENT: Production

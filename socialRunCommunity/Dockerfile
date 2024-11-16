@@ -18,7 +18,7 @@ COPY --from=build-env /app/out ./
 # Add SSL certificates
 # COPY /path/to/your/surfonlife.pfx /etc/ssl/surfonlife.pfx
 
-EXPOSE 80
+#EXPOSE 80
 EXPOSE 443
 
 ENTRYPOINT ["dotnet", "socialRunCommunity.dll"]
