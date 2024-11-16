@@ -1,24 +1,19 @@
-# Build stage
+# Используем SDK для сборки приложения
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
 
-# Copy csproj and restore
+# Копируем csproj и восстанавливаем зависимости
 COPY *.csproj ./
 RUN dotnet restore
 
-# Copy everything else and build
+# Копируем всё остальное и компилируем приложение
 COPY . ./
 RUN dotnet publish -c Release -o out
 
-# Runtime stage
+# Базовый runtime-образ
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=build-env /app/out ./
+COPY --from=build-env /app/out .
 
-# Add SSL certificates
-# COPY /path/to/your/surfonlife.pfx /etc/ssl/surfonlife.pfx
-
-#EXPOSE 80
-EXPOSE 443
-
+# Запускаем Kestrel на HTTP
 ENTRYPOINT ["dotnet", "socialRunCommunity.dll"]
