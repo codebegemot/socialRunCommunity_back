@@ -36,8 +36,12 @@ builder.Services.AddCors(options =>
 
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenAnyIP(5000); // Устанавливаем HTTP на порту 5000
+    options.ListenAnyIP(443, listenOptions =>
+    {
+        listenOptions.UseHttps("/etc/ssl/certs/surfonlife/certificate.crt", "/etc/ssl/certs/surfonlife/private.key");
+    });
 });
+
 
 var app = builder.Build();
 
