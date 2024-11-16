@@ -34,6 +34,15 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(80); // HTTP (если нужно)
+    options.ListenAnyIP(443, listenOptions =>
+    {
+        listenOptions.UseHttps("/etc/ssl/surfonlife.crt", "/etc/ssl/certificate.key");
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
