@@ -11,6 +11,7 @@ services:
       - /etc/ssl:/etc/ssl:ro
     depends_on:
       - database
+      
   database:
     image: postgres:16
     restart: always
