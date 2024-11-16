@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.EntityFrameworkCore;
 using socialRunCommunity.Services;
 
@@ -34,9 +35,17 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Configure Kestrel to use HTTPS
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenAnyIP(5000); // Устанавливаем HTTP на порту 5000
+    var certPath = "/etc/ssl/certificate.crt";
+    var keyPath = "/etc/ssl/certificate.key";
+
+    options.Listen(IPAddress.Any, 5000); // HTTP
+    options.Listen(IPAddress.Any, 5001, listenOptions =>
+    {
+        listenOptions.UseHttps(certPath, keyPath);
+    });
 });
 
 var app = builder.Build();
@@ -52,7 +61,7 @@ app.UseCors("AllowFrontend");
 
 app.UseStaticFiles();
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

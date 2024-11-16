@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Host=database;Database=socialRunCommunity;Username=dmitry;Password=Corvus404
+    volumes:
+      - /etc/ssl:/etc/ssl:ro
+    depends_on:
+      - database
+
+  database:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: socialRunCommunity
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
