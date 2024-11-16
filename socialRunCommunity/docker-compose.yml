@@ -3,15 +3,14 @@ services:
   app:
     build: .
     ports:
-      - "5000:5000"
-      - "5001:5001"
+      - "80:80"       # HTTP
+      - "443:443"     # HTTPS
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      ASPNETCORE_ENVIRONMENT: Production
     volumes:
       - /etc/ssl:/etc/ssl:ro
     depends_on:
       - database
-
   database:
     image: postgres:16
     restart: always
