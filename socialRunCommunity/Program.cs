@@ -38,11 +38,13 @@ builder.Services.AddCors(options =>
 // Configure Kestrel to use HTTPS
 builder.WebHost.ConfigureKestrel(options =>
 {
+    options.ListenAnyIP(5000); // HTTP
     options.ListenAnyIP(5001, listenOptions =>
     {
-        listenOptions.UseHttps("/etc/ssl/certificate_combined.pem");
+        listenOptions.UseHttps("/etc/ssl/surfonlife.pfx", "Corvus404");
     });
 });
+
 
 var app = builder.Build();
 
