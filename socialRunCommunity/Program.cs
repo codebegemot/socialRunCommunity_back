@@ -34,27 +34,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Настройка Kestrel для HTTPS с использованием сертификатов
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP(80); // HTTP
-
-    options.ListenAnyIP(443, listenOptions =>
-    {
-        listenOptions.UseHttps(
-            builder.Configuration["ASPNETCORE_Kestrel__Endpoints__Https__Certificate__Path"],
-            builder.Configuration["ASPNETCORE_Kestrel__Endpoints__Https__Certificate__KeyPath"]);
-    });
-});
-
 var app = builder.Build();
-
-// Применение миграций при запуске
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>(); // Замените на ваше имя DbContext
-    dbContext.Database.Migrate();
-}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
