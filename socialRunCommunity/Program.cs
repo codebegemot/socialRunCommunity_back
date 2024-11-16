@@ -38,13 +38,9 @@ builder.Services.AddCors(options =>
 // Configure Kestrel to use HTTPS
 builder.WebHost.ConfigureKestrel(options =>
 {
-    var certPath = "/etc/ssl/certificate.crt";
-    var keyPath = "/etc/ssl/certificate.key";
-
-    options.Listen(IPAddress.Any, 5000); // HTTP
-    options.Listen(IPAddress.Any, 5001, listenOptions =>
+    options.ListenAnyIP(5001, listenOptions =>
     {
-        listenOptions.UseHttps(certPath, keyPath);
+        listenOptions.UseHttps("/etc/ssl/certificate_combined.pem");
     });
 });
 
