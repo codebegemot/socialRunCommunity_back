@@ -30,7 +30,7 @@ public class EventController : ControllerBase
 
         return Ok(eventDTOs);
     }
-
+    
     [HttpGet("event")]
     public async Task<IActionResult> GetEvent([FromQuery] int pageNumber)
     {
@@ -45,7 +45,7 @@ public class EventController : ControllerBase
             return NotFound("No event found.");
         }
 
-        // Map Event to EventDTO
+        // Map Event to EventDTO and return as a single-element array
         var eventDTO = new EventDTO
         {
             Id = eventItem.Id,
@@ -57,8 +57,9 @@ public class EventController : ControllerBase
             Location = eventItem.Location
         };
 
-        return Ok(eventDTO);
+        return Ok(new List<EventDTO> { eventDTO });
     }
+
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetEventById(int id)
