@@ -1,0 +1,59 @@
+import SwiftUI
+import SDWebImageSwiftUI
+
+struct EventListView: View {
+    @State private var events = [Event]()
+    @State private var isLoading = true
+    @State private var selectedEventIndex = 0
+
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                // Размытый фон с текущим событием
+                if !isLoading, !events.isEmpty {
+                    let event = events[selectedEventIndex]
+                    WebImage(url: URL(string: event.imageUrl))
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: geometry.size.width, height: geometry.size.height * 2 / 3)
+                        .blur(radius: 20)
+                        .edgesIgnoringSafeArea(.all)
+                }
+
+                // Основной контент
+                TabView(selection: $selectedEventIndex) {
+                    ForEach(events.indices, id: \.self) { index in
+                        EventCardView(event: events[index])
+                            .frame(width: geometry.size.width * 0.9, height: geometry.size.height * 0.8)
+                            .cornerRadius(20)
+                            .shadow(radius: 10)
+                            .tag(index)
+                    }
+                }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never)) // Вертикальное листание
+                .frame(width: geometry.size.width, height: geometry.size.height)
+            }
+        }
+        .onAppear {
+            loadEvents()
+        }
+    }
+
+    func loadEvents() {
+        APIClient.shared.fetchEvents { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let events):
+                    self.events = events
+                    self.isLoading = false
+                case .failure(let error):
+                    print("Error fetching events: \(error)")
+                }
+            }
+        }
+    }
+}
+
+#Preview {
+    EventListView()
+}
