@@ -15,7 +15,20 @@ public class EventController : ControllerBase
     public async Task<IActionResult> GetAllEvents()
     {
         var events = await _eventService.GetAllEventsAsync();
-        return Ok(events);
+
+        // Map Event to EventDTO
+        var eventDTOs = events.Select(e => new EventDTO
+        {
+            Id = e.Id,
+            Title = e.Title,
+            Description = e.Description,
+            EventDate = e.EventDate,
+            MaxParticipants = e.MaxParticipants,
+            ImageUrl = e.ImageUrl,
+            Location = e.Location
+        }).ToList();
+
+        return Ok(eventDTOs);
     }
 
     [HttpGet("event")]
@@ -32,7 +45,19 @@ public class EventController : ControllerBase
             return NotFound("No event found.");
         }
 
-        return Ok(eventItem);
+        // Map Event to EventDTO
+        var eventDTO = new EventDTO
+        {
+            Id = eventItem.Id,
+            Title = eventItem.Title,
+            Description = eventItem.Description,
+            EventDate = eventItem.EventDate,
+            MaxParticipants = eventItem.MaxParticipants,
+            ImageUrl = eventItem.ImageUrl,
+            Location = eventItem.Location
+        };
+
+        return Ok(eventDTO);
     }
 
     [HttpGet("{id}")]
@@ -76,6 +101,12 @@ public class EventController : ControllerBase
     public async Task<IActionResult> CancelUserRegistration(int id, [FromBody] int userId)
     {
         await _eventService.CancelUserRegistrationAsync(id, userId);
+        return Ok();
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteEvent(int id){
+        await _eventService.DeleteEventAsync(id);
         return Ok();
     }
 }
